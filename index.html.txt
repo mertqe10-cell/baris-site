@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Elif, Benimle Barışır Mısın?</title>
+
+<style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        font-family: "Poppins", sans-serif;
+        background: linear-gradient(135deg, #ff8ecb, #ffd2e9);
+        height: 100vh;
+        text-align: center;
+        user-select: none;
+    }
+
+    h1 {
+        margin-top: 80px;
+        font-size: 38px;
+        color: white;
+        text-shadow: 0px 0px 15px rgba(255, 0, 130, 0.7);
+        transition: 0.5s;
+    }
+
+    .buttons {
+        margin-top: 50px;
+        position: relative;
+    }
+
+    button {
+        padding: 20px 40px;
+        font-size: 26px;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: bold;
+    }
+
+    #evet {
+        background: #ff1a8c;
+        color: white;
+        box-shadow: 0px 0px 20px rgba(255, 30, 150, 0.7);
+    }
+    #evet:hover {
+        transform: scale(1.1);
+        background: #ff0073;
+    }
+
+    #hayir {
+        background: #6f6f6f;
+        color: white;
+        position: relative;
+    }
+
+    .heartRain {
+        position: absolute;
+        color: rgba(255, 0, 110, 0.7);
+        animation: fall 5s linear infinite;
+    }
+
+    @keyframes fall {
+        0% { transform: translateY(-100px); opacity: 1; }
+        100% { transform: translateY(110vh); opacity: 0; }
+    }
+
+    #bigHeart {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        font-size: 0px;
+        transform: translate(-50%, -50%);
+        opacity: 0;
+        transition: 1s ease-out;
+        color: #ff0066;
+        text-shadow: 0 0 30px rgba(255,0,140,0.8);
+    }
+
+    #loveScreen {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 180, 220, 0.95);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        text-align: center;
+        padding: 20px;
+    }
+
+    #loveScreen h2 {
+        color: #ff0066;
+        font-size: 40px;
+        text-shadow: 0 0 20px rgba(255,0,120,0.7);
+        margin-bottom: 20px;
+    }
+
+</style>
+</head>
+<body>
+
+<audio id="music" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2022/10/03/audio_8c3fc1662f.mp3?filename=romantic-melody-121349.mp3" type="audio/mpeg">
+</audio>
+
+<h1 id="mainText">Elif... Benimle barışır mısın? 💗</h1>
+
+<div class="buttons">
+    <button id="evet" onclick="evet()">Evet</button>
+    <button id="hayir" onclick="hayir()">Hayır</button>
+</div>
+
+<div id="bigHeart">💖</div>
+
+<div id="loveScreen">
+    <h2>Elif... Seni çok seviyorum 💞</h2>
+    <p style="font-size: 26px; color:#ff1a8c;">
+        Kalbim gerçekten sensiz eksik kalıyor...  
+        Ne olursa olsun, seni kaybetmek istemiyorum.  
+        İyi ki varsın Elif... 💗  
+        Bundan sonra seni hiç üzmeyeceğim güzelim.
+    </p>
+</div>
+
+<script>
+    let hayirSayac = 0;
+    const evetBtn = document.getElementById("evet");
+    const hayirBtn = document.getElementById("hayir");
+    const mainText = document.getElementById("mainText");
+    const bigHeart = document.getElementById("bigHeart");
+    const loveScreen = document.getElementById("loveScreen");
+    const music = document.getElementById("music");
+
+    document.body.addEventListener("click", () => music.play(), { once: true });
+
+    setInterval(() => {
+        const heart = document.createElement("div");
+        heart.classList.add("heartRain");
+        heart.textContent = "❤️";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        heart.style.fontSize = (20 + Math.random() * 25) + "px";
+        document.body.appendChild(heart);
+
+        setTimeout(() => heart.remove(), 5000);
+    }, 200);
+
+    function hayir() {
+        hayirSayac++;
+
+        hayirBtn.style.left = (Math.random() * 300 - 150) + "px";
+        hayirBtn.style.top = (Math.random() * 300 - 150) + "px";
+
+        let size = parseInt(window.getComputedStyle(evetBtn).fontSize);
+        evetBtn.style.fontSize = (size + 4) + "px";
+        evetBtn.style.padding = "25px 50px";
+
+        if (hayirSayac >= 6) {
+            hayirBtn.style.display = "none";
+            mainText.textContent =
+                "Elif... Başka çaren yok... Evet der misin artık güzelim? 💞";
+        }
+    }
+
+    function evet() {
+        bigHeart.style.opacity = 1;
+        bigHeart.style.fontSize = "200px";
+
+        setTimeout(() => {
+            bigHeart.style.opacity = 0;
+        }, 1200);
+
+        hayirBtn.style.display = "none";
+        evetBtn.style.display = "none";
+        mainText.style.opacity = 0;
+
+        setTimeout(() => {
+            loveScreen.style.display = "flex";
+        }, 1200);
+    }
+</script>
+
+</body>
+</html>
